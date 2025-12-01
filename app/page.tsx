@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
-
+// Default page 
 const page = () => {
   return (
     <div>
