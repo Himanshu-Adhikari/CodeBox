@@ -1,15 +1,15 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
+import Header from './_components/Header'
+import Hero from './_components/Hero'
 // Default page 
-const page = () => {
+const home = () => {
   return (
-    <div>
-      <h1 className='font-game text-2xl'>
-        Hello everyone
-      </h1>
-      <Button> Yoo</Button>
+    <div className='flex flex-col items-center'>
+      <Header/>
+      <Hero/>
     </div>
   )
 }
 
-export default page
+export default home
