@@ -1,4 +1,4 @@
-const { defaultFilter } = require("cmdk");
+// const { defaultFilter } = require("cmdk");
 
 const courses = [
   {
