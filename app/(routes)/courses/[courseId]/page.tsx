@@ -9,7 +9,7 @@ import { get, set } from "idb-keyval";
 import { Course } from "../_components/CourseList";
 import CourseStatus from "./_components/CourseStatus";
 import UpgradeSub from "../../dashboard/_components/UpgradeSub";
-import CommunityHelpSecition from "./_components/CommunityHelpSecition";
+import CommunityHelpSection from "./_components/CommunityHelpSection";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -19,15 +19,13 @@ const CourseDetails = () => {
   const hasFetchedRef = useRef(false); // prevents double calls in React Strict Mode
 
   useEffect(() => {
-    if (!courseId) return;
-
-    // 🚫 Prevent double API calls
-    if (hasFetchedRef.current) return;
-    hasFetchedRef.current = true;
-
-    loadCachedCourseDetail(courseId as string);        // ✨ immediate UI load
-    if(!courseDetail)fetchFreshCourseDetail(courseId as string);        // 🔄 background refresh
-  }, [courseId]);
+      if (!courseId) return;
+      // 🚫 Prevent double API calls
+      if (hasFetchedRef.current) return;
+      hasFetchedRef.current = true;
+      loadCachedCourseDetail(courseId as string);        // ✨ immediate UI load
+      fetchFreshCourseDetail(courseId as string);        // 🔄 background refresh
+    }, [courseId]);
 
   // 1️⃣ Load cached detail from IndexedDB (instant UI)
   const loadCachedCourseDetail = async (id: string) => {
@@ -75,14 +73,14 @@ const CourseDetails = () => {
         loading={isLoading}
         courseDetail={courseDetail}
       />
-      <div className="grid grid-cols-3 p-10 md:px-24 lg:px-36 gap-7">
-        <div className="col-span-2">
+       <div className="grid grid-cols-1 lg:grid-cols-3 p-10 md:px-24 lg:px-36 gap-7">
+        <div className="lg:col-span-2">
       <CourseChapters loading={isLoading}
         courseDetail={courseDetail}/></div>
         <div >
           <CourseStatus courseDetail={courseDetail}/>
           <UpgradeSub/>
-          <CommunityHelpSecition/>
+          <CommunityHelpSection/>
         </div>
       </div>
     </div>

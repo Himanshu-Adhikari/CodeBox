@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 
-const CommunityHelpSecition = () => {
+const CommunityHelpSection = () => {
   return (
     <div className="font-game border-4 p-4 rounded-2xl mt-7 flex flex-col items-center">
         <h2 className="text-3xl">Need help?</h2>
@@ -12,4 +12,4 @@ const CommunityHelpSecition = () => {
   )
 }
 
-export default CommunityHelpSecition
+export default CommunityHelpSection
