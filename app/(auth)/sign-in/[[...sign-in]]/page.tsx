@@ -50,7 +50,7 @@ export default function SignInPage() {
                             <Clerk.FieldError className="text-sm text-red-500" />
                         </Clerk.Field>
                     </div>
-
+                    <div id="clerk-captcha"></div>
                     {/* SUBMIT BUTTON */}
                     <SignIn.Action
                         submit

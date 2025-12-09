@@ -10,7 +10,10 @@ const InviteFriend = () => {
         <p className="font-game">Enjoying your time here? Invite your friends and grow the GhostBox community together!</p>
         <div className="flex mt-5 items-center gap-4">
             <Input placeholder="Enter Friend's Email .. " className="min-w-sm"></Input>
-            <Button variant={'pixel'} className="font-game text-3xl">Invite</Button>
+            <Button variant={'pixel'} className="  font-game text-3xl
+    transition-all duration-300 ease-out
+    hover:scale-[1.07] hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]
+    active:scale-95">Invite</Button>
         </div>
     </div>
   )
