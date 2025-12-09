@@ -1,3 +1,4 @@
+"use client"
 import { Progress } from "@/components/ui/progress"
 import Image from "next/image"
 import { Course } from "../../_components/CourseList";
@@ -16,8 +17,10 @@ const CourseStatus = ({courseDetail}:Props) => {
             let total_xp_cnt=0;
 
             courseDetail?.chapters?.forEach((chapter)=>{
-                total_exercises_cnt=total_exercises_cnt+chapter?.exercises?.length;
-                chapter?.exercises?.forEach((exc) => total_xp_cnt=total_xp_cnt + exc?.xp)   
+                total_exercises_cnt += chapter.exercises?.length ?? 0
+                chapter.exercises?.forEach((exc) => {
+                    total_xp_cnt += exc.xp ?? 0
+                    }) 
             })
             set_cnt({
                 Total_exercise:total_exercises_cnt,

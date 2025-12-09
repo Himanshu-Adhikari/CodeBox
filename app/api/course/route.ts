@@ -12,14 +12,29 @@ export async function GET(req: Request) {
     const courseId = searchParams.get("courseid");
 
     if (courseId) {
+        const courseIdNum = Number(courseId);
+        if (isNaN(courseIdNum)) {
+          return NextResponse.json(
+            { error: "Invalid course ID" },
+            { status: 400 }
+          );
+        }
+
       const result = await db
         .select()
         .from(CourseTable)
-        .where(eq(CourseTable.courseId, Number(courseId)));
+        .where(eq(CourseTable.courseId, courseIdNum));
+
+      if (result.length === 0) {
+        return NextResponse.json(
+          { error: "Course not found" },
+          { status: 404 }
+        );
+      }
       const chaptersResult=await db
       .select()
       .from(CourseChapterTable)
-      .where(eq(CourseChapterTable.courseId, Number(courseId)))
+      .where(eq(CourseChapterTable.courseId, courseIdNum))
       .orderBy(asc(CourseChapterTable.chapterId));
 
       return NextResponse.json({...result[0] ?? null

@@ -25,8 +25,8 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
     <div>
       <div className='p-5 rounded-2xl border-4'>
         { courseDetail?.chapters.map((chapter,index)=>(
-          <Accordion type="single" collapsible key={index}>
-            <AccordionItem value="item-1">
+          <Accordion type="single" collapsible key={chapter.chapterId}>
+            <AccordionItem value={`chapter-${chapter.chapterId}`}>
               <AccordionTrigger className='font-game p-3 hover:bg-slate-900 text-3xl'>
                 <div className='flex gap-10'>
 
