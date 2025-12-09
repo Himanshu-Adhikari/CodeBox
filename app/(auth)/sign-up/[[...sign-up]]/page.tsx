@@ -40,7 +40,7 @@ export default function SignUpPage() {
                             <Clerk.FieldError className="text-sm text-red-500" />
                         </Clerk.Field>
                     </div>
-
+                    <div id="clerk-captcha"></div>
                     <SignUp.Action submit className="w-full px-4 py-2 bg-yellow-400 border-2 border-black shadow-[4px_4px_0_0_#000] active:translate-y-[2px] active:shadow-none text-black font-bold uppercase">
                         Sign Up
                     </SignUp.Action>
