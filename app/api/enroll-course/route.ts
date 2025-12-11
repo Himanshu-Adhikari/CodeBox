@@ -2,10 +2,10 @@ import { db } from "@/config/db";
 import { Enrolled_Course} from "@/config/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { asc, eq } from "drizzle-orm";
-import { NextResponse } from "next/server";
+import { NextRequest,NextResponse } from "next/server";
 
 
-export async function POST(req:NextResponse){
+export async function POST(req:NextRequest){
     const {courseId}=await req.json();
     const user=await currentUser();
     const result=await db.insert(Enrolled_Course)
