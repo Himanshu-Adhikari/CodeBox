@@ -41,7 +41,6 @@ export async function GET(req: Request) {
 
       const enrolled_course=await db.select()
       .from(Enrolled_Course)
-      //@ts-ignore
       .where(and(
         eq(Enrolled_Course.courseId, courseIdNum),
         eq(Enrolled_Course.userId, email)
