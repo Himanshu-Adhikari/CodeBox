@@ -12,7 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Button } from '@/components/ui/button';
-
+import Image from 'next/image';
 type Props = {
   loading: boolean;
   courseDetail: Course ;
@@ -24,7 +24,8 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
   return (
     <div>
       <div className='p-5 rounded-2xl border-4'>
-        { courseDetail?.chapters.map((chapter,index)=>(
+        {courseDetail?.chapters?.length ?<>
+        { courseDetail?.chapters?.map((chapter,index)=>(
           <Accordion type="single" collapsible key={chapter.chapterId}>
             <AccordionItem value={`chapter-${chapter.chapterId}`}>
               <AccordionTrigger className='font-game p-3 hover:bg-slate-900 text-3xl'>
@@ -61,6 +62,14 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
             </AccordionItem>
           </Accordion>
         ))}
+        </>:<div className='flex  text-center'>
+          <Image src={'/developing.gif'} width={400} height={400} 
+          alt='making' className='rounded-3xl'></Image>
+          <div className='flex flex-col items-center'>
+          <h2 className='font-game text-4xl'> Will get Courses Soon stay tuned... ☺️</h2>
+          <Image src={'/goblin.gif'} alt='gob' height={100} width={100}></Image>
+          </div>
+          </div>}
       </div>
     </div>
   )

@@ -5,6 +5,7 @@ import Provider from "./provider";
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,6 +52,7 @@ export default function RootLayout({
           disableTransitionOnChange
           >
         {children}
+        <Toaster/>
         </Provider>
       </body>
       </ClerkProvider>

@@ -12,6 +12,12 @@ const CourseStatus = ({courseDetail}:Props) => {
         Total_exercise:number,
         Total_xp:number
     }>();
+    const update_progress=(val:number,tot_val:number)=>{
+        if(val && tot_val){
+            return (val*100)/tot_val;
+        }
+        return 0
+    }
     const total_Count_Cal=()=>{
             let total_exercises_cnt=0;
             let total_xp_cnt=0;
@@ -49,9 +55,9 @@ const CourseStatus = ({courseDetail}:Props) => {
             <div className="w-full">
                 <h2 className="flex justify-between text-2xl">
                     XP Earned
-                <span className="text-gray-300">0/{(cnts?.Total_xp)}</span>
+                <span className="text-gray-300">{courseDetail?.course_enrolled_info?.xpEarned}/{(cnts?.Total_xp)}</span>
                     </h2>
-                <Progress value={37} className="mt-2"/>
+                <Progress value={update_progress(courseDetail?.course_enrolled_info?.xpEarned??40,cnts?.Total_xp??0)} className="mt-2"/>
             </div>
         </div>
     </div>
