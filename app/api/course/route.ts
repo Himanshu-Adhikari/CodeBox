@@ -1,6 +1,7 @@
 import { db } from "@/config/db";
-import { CourseChapterTable, CourseTable } from "@/config/schema";
-import { asc, eq } from "drizzle-orm";
+import { CourseChapterTable, CourseTable, Enrolled_Course } from "@/config/schema";
+import { currentUser } from "@clerk/nextjs/server";
+import { asc, eq ,and} from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 // Cache API response for 1 hour
@@ -10,7 +11,7 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const courseId = searchParams.get("courseid");
-
+    const user=await currentUser();
     if (courseId) {
         const courseIdNum = Number(courseId);
         if (isNaN(courseIdNum)) {
@@ -36,10 +37,22 @@ export async function GET(req: Request) {
       .from(CourseChapterTable)
       .where(eq(CourseChapterTable.courseId, courseIdNum))
       .orderBy(asc(CourseChapterTable.chapterId));
+      const email = user?.primaryEmailAddress?.emailAddress ?? "";;
 
-      return NextResponse.json({...result[0] ?? null
-        ,
-        chapters:chaptersResult ?? null
+      const enrolled_course=await db.select()
+      .from(Enrolled_Course)
+      //@ts-ignore
+      .where(and(
+        eq(Enrolled_Course.courseId, courseIdNum),
+        eq(Enrolled_Course.userId, email)
+      ))
+
+      const is_enrolled_course=enrolled_course.length  > 0;
+        return NextResponse.json({
+          ...result[0] ?? null,
+          chapters:chaptersResult ?? null,
+        user_enrolled:is_enrolled_course,
+        course_enrolled_info:enrolled_course[0]
       });
     }
 
