@@ -42,7 +42,7 @@ const CourseDetails = () => {
     try {
       const result = await axios.get(`/api/course/?courseid=${id}`);
 
-      console.log("fresh:", result.data);
+      // console.log("fresh:", result.data);
       
       // ✅ Update state immediately
       setCourseDetail(result.data);

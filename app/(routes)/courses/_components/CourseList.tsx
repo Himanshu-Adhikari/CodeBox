@@ -24,6 +24,11 @@ type CourseEnrolledInfo={
   xpEarned:number;
   enrolled_date:any;
 }
+type CompletedExercise={
+  chapterId:number;
+  courseId:number;
+  exerciseId:number;
+}
 export type Course = {
   id: number;
   courseId: number;
@@ -35,6 +40,7 @@ export type Course = {
   chapters:Chapters[];
   user_enrolled?:boolean;
   course_enrolled_info?:CourseEnrolledInfo;
+  exercises_complete?:CompletedExercise[];
 };
 
 const CourseList = () => {
