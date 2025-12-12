@@ -1,7 +1,7 @@
 import { db } from "@/config/db";
-import { CourseChapterTable, CourseTable, Enrolled_Course } from "@/config/schema";
+import { CourseChapterTable, CourseTable, Enrolled_Course ,ExerciseCompleted } from "@/config/schema";
 import { currentUser } from "@clerk/nextjs/server";
-import { asc, eq ,and} from "drizzle-orm";
+import { asc, eq ,and, desc} from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 // Cache API response for 1 hour
@@ -45,14 +45,22 @@ export async function GET(req: Request) {
         eq(Enrolled_Course.courseId, courseIdNum),
         eq(Enrolled_Course.userId, email)
       ))
-
+      const exercises_complete=await db.select().
+      from(ExerciseCompleted)
+      .where(and(
+        eq(ExerciseCompleted.courseId,courseIdNum),
+        eq(ExerciseCompleted.userId ,user?.primaryEmailAddress?.emailAddress ?? "")
+      ))
+      .orderBy(desc(ExerciseCompleted?.courseId),desc(ExerciseCompleted?.exerciseId))
       const is_enrolled_course=enrolled_course.length  > 0;
         return NextResponse.json({
           ...result[0] ?? null,
           chapters:chaptersResult ?? null,
         user_enrolled:is_enrolled_course,
-        course_enrolled_info:enrolled_course[0]
+        course_enrolled_info:enrolled_course[0],
+        exercises_complete:exercises_complete
       });
+      
     }
 
     // ⬇️ ELSE CASE CORRECTLY PLACED

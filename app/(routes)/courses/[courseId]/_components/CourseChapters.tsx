@@ -20,7 +20,41 @@ type Props = {
 
 
 
+
 const CourseChapters = ({ loading, courseDetail }: Props) => {
+  const EnableExercise = (
+    chapterIndex: number,
+    exerciseIndex: number,
+    chapterExercisesLength: number
+    ) => {
+        const completed = courseDetail?.exercises_complete;
+
+        // If nothing is completed, enable FIRST exercise ONLY
+        console.log("chapter index",exerciseIndex,courseDetail?.exercises_complete)
+        if (!completed || completed.length === 0) {
+            return chapterIndex === 0 && exerciseIndex === 0;
+        }
+
+        // last completed
+        const last = completed[completed.length - 1];
+        // Convert to  global exercise number
+        const currentExerciseNumber =
+            chapterIndex * chapterExercisesLength + exerciseIndex +1;
+        console.log("exr index is ",exerciseIndex," ",currentExerciseNumber);
+
+        const lastCompletedNumber =
+            (last.chapterId - 1) * chapterExercisesLength + last.exerciseId;
+
+        return currentExerciseNumber === lastCompletedNumber + 2;
+    };
+
+    const isExercise_Complete=(chapterId: number,
+    exerciseId: number,)=>{
+      const Completed_Chapters=courseDetail?.exercises_complete;
+      const completed_chapter=Completed_Chapters?.find(item=>(item.chapterId == chapterId && item.exerciseId==exerciseId));
+      if(completed_chapter)return true;
+      return false;
+    }
   return (
     <div>
       <div className='p-5 rounded-2xl border-4'>
@@ -46,7 +80,11 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
                     <h1 className='text-2xl'>Exercise {index*chapter?.exercises?.length+ex_index+1}</h1>
                     <h2 className='text-3xl'>{exc?.name}</h2>
                     </div>
-                    {/* <Button variant={'pixel'}>{exc?.xp} xp</Button> */}
+                    
+                    {EnableExercise(index,ex_index,chapter?.exercises?.length) ?
+                     <Button variant={'pixel'}>{exc?.xp} xp</Button>:
+                     isExercise_Complete(chapter?.chapterId,ex_index+1) ? 
+                    <Button variant={'pixel'} className=' bg-green-300 shadow-green-900' >Done</Button>:
                     <Tooltip>
                     <TooltipTrigger asChild>
                         <Button variant={'pixelDisabled'}>?</Button>
@@ -54,7 +92,7 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
                     <TooltipContent className='font-game '>
                       Please Enroll First
                     </TooltipContent>
-                  </Tooltip>
+                  </Tooltip>}
                   </div>
                 ))}
               </div>
