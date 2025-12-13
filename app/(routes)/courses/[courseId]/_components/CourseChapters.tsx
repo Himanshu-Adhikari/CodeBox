@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/tooltip"
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 type Props = {
   loading: boolean;
   courseDetail: Course ;
@@ -30,7 +31,7 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
         const completed = courseDetail?.exercises_complete;
 
         // If nothing is completed, enable FIRST exercise ONLY
-        console.log("chapter index",exerciseIndex,courseDetail?.exercises_complete)
+        // console.log("chapter index",exerciseIndex,courseDetail?.exercises_complete)
         if (!completed || completed.length === 0) {
             return chapterIndex === 0 && exerciseIndex === 0;
         }
@@ -40,7 +41,7 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
         // Convert to  global exercise number
         const currentExerciseNumber =
             chapterIndex * chapterExercisesLength + exerciseIndex +1;
-        console.log("exr index is ",exerciseIndex," ",currentExerciseNumber);
+        // console.log("exr index is ",exerciseIndex," ",currentExerciseNumber);
 
         const lastCompletedNumber =
             (last.chapterId - 1) * chapterExercisesLength + last.exerciseId;
@@ -82,7 +83,10 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
                     </div>
                     
                     {EnableExercise(index,ex_index,chapter?.exercises?.length) ?
-                     <Button variant={'pixel'}>{exc?.xp} xp</Button>:
+                     <Link href={'/courses/'+courseDetail?.courseId+'/'+chapter?.chapterId+'/'+exc?.slug}>
+                     <Button variant={'pixel'}>{exc?.xp} xp</Button>
+                     </Link>
+                     :
                      isExercise_Complete(chapter?.chapterId,ex_index+1) ? 
                     <Button variant={'pixel'} className=' bg-green-300 shadow-green-900' >Done</Button>:
                     <Tooltip>
