@@ -6,13 +6,13 @@ import Image from "next/image";
 import { ChartNoAxesColumnIncreasingIcon } from "lucide-react";
 import { get, set } from "idb-keyval";
 import Link from "next/link";
-type exercise={
+export type exercise={
   difficulty:string;
   name:string;
   slug:string;
   xp:number;
 }
-type Chapters={
+export type Chapters={
   chapterId:number;
   courseId: number;
   desc: string;
@@ -20,11 +20,11 @@ type Chapters={
   id:number;
   exercises:exercise[];
 }
-type CourseEnrolledInfo={
+export type CourseEnrolledInfo={
   xpEarned:number;
   enrolled_date:any;
 }
-type CompletedExercise={
+export type CompletedExercise={
   chapterId:number;
   courseId:number;
   exerciseId:number;

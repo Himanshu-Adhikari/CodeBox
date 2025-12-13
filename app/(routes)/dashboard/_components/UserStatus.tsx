@@ -15,7 +15,7 @@ const UserStatus = () => {
     <div className='grid grid-cols-2 gap-5'>
     <div className='flex items-center '>
         <Image src={'/star.gif'} alt='star' width={35} height={35}></Image>
-        <div>
+        <div >
             <h2 className='text-xl font-game'>20</h2>
             <h2 className='font-game text-xl text-gray-600'>Total Rewards</h2>
         </div>
@@ -39,4 +39,4 @@ const UserStatus = () => {
   )
 }
 
-export default UserStatus
+export default UserStatus ;
