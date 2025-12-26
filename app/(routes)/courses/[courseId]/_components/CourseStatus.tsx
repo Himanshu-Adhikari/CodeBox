@@ -55,7 +55,7 @@ const CourseStatus = ({courseDetail}:Props) => {
             <div className="w-full">
                 <h2 className="flex justify-between text-2xl">
                     XP Earned
-                <span className="text-gray-300">{courseDetail?.course_enrolled_info?.xpEarned}/{(cnts?.Total_xp)}</span>
+                <span className="text-gray-300">{courseDetail?.course_enrolled_info?.xpEarned ?? 0}/{(cnts?.Total_xp)}</span>
                     </h2>
                 <Progress value={update_progress(courseDetail?.course_enrolled_info?.xpEarned??0,cnts?.Total_xp??0)} className="mt-2"/>
             </div>

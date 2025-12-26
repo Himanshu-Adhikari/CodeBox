@@ -45,7 +45,6 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
 
         const lastCompletedNumber =
             (last.chapterId - 1) * chapterExercisesLength + last.exerciseId;
-
         return currentExerciseNumber === lastCompletedNumber + 2;
     };
 
@@ -82,13 +81,18 @@ const CourseChapters = ({ loading, courseDetail }: Props) => {
                     <h2 className='text-3xl'>{exc?.name}</h2>
                     </div>
                     
-                    {EnableExercise(index,ex_index,chapter?.exercises?.length) ?
-                     <Link href={'/courses/'+courseDetail?.courseId+'/'+chapter?.chapterId+'/'+exc?.slug}>
-                     <Button variant={'pixel'}>{exc?.xp} xp</Button>
-                     </Link>
-                     :
+                    {
+                    // EnableExercise(index,ex_index,chapter?.exercises?.length) ?
+                    //  <Link href={'/courses/'+courseDetail?.courseId+'/'+chapter?.chapterId+'/'+exc?.slug}>
+                    //  <Button variant={'pixel'}>{exc?.xp} xp</Button>
+                    //  </Link>
+                    //  :
                      isExercise_Complete(chapter?.chapterId,ex_index+1) ? 
-                    <Button variant={'pixel'} className=' bg-green-300 shadow-green-900' >Done</Button>:
+                    <Button variant={'pixel'} className='text-xl bg-green-30 bg-green-500' >Completed</Button>:
+                    courseDetail?.user_enrolled?
+                    <Link href={'/courses/'+courseDetail?.courseId+'/'+chapter?.chapterId+'/'+exc?.slug}>
+                      <Button className='text-xl cursor-pointer' variant={'pixel'}>{exc?.xp} xp</Button>
+                    </Link>:
                     <Tooltip>
                     <TooltipTrigger asChild>
                         <Button variant={'pixelDisabled'}>?</Button>
