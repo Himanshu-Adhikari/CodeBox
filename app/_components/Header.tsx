@@ -13,69 +13,83 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 
-import courses from "../_data/coursedata";
+// import courses from "../_data/coursedata";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { useParams, usePathname } from "next/navigation";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Course } from "../(routes)/courses/_components/CourseList";
 
 const Header = () => {
   const { user } = useUser();
   const pathurl = usePathname();
   // console.log(pathurl);
   const { exerciseslug } = useParams();
-  const capitalize = (s:string) => s ? s[0].toUpperCase() + s.slice(1) : s;
+  const capitalize = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s);
+  const [courses, setcourses] = useState<Course[]>();
+  useEffect(() => {
+    GetCourse();
+  }, []);
+  const GetCourse = async () => {
+    const result = await axios.get("/api/course");
+    console.log(result.data);
+    setcourses(result.data);
+  };
 
   return (
     <div className="p-4 max-w-7xl flex justify-between items-center w-full">
-        <Link href={"/"} className="flex gap-2 items-center ">
-          <Image src={"/logo.png"} alt="logo" width={40} height={40} />
-          <h1 className="text-3xl font-game font-bold">GhostBox </h1>
-        </Link>
-        {!exerciseslug ? (
-          <NavigationMenu>
-             
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Courses</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                   
-                  <ul className="grid md:grid-cols-2 gap-2 sm:w-[400px] md:w-[500px] lg:w-[600px]">
-                    {courses.map((course, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="p-2 hover:bg-accent rounded-2xl cursor-pointer"
-                        >
-                          <h2 className="font-medium">{course.name}</h2>
-                          <p className="text-sm text-gray-500">{course.desc}</p>
+      <Link href={"/"} className="flex gap-2 items-center ">
+        <Image src={"/logo.png"} alt="logo" width={40} height={40} />
+        <h1 className="text-3xl font-game font-bold">GhostBox </h1>
+      </Link>
+      {!exerciseslug ? (
+        <NavigationMenu>
+           
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Courses</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                 
+                <ul className="grid md:grid-cols-2 gap-2 sm:w-[400px] md:w-[500px] lg:w-[600px]">
+                  {courses?.map((course, index) => {
+                    return (
+                      <Link href={"/courses/" + course?.courseId} key={index}>
+                        <div className="p-2 hover:bg-accent rounded-2xl cursor-pointer">
+                          <h2 className="font-medium">{course?.title}</h2>
+                          <p className="text-sm text-gray-500">
+                            {course?.desc}
+                          </p>
                         </div>
-                      );
-                    })}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link href="/projects">Projects</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link href={"/pricing"}>Pricing</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link href={"/contact"}>Contact Us</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        ) : (
-          <div className="">
-            <h2 className="font-game rounded-tl-none text-5xl p-4 border-4 bg-slate-900 rounded-4xl">
-              {capitalize(exerciseslug?.toString()?.replaceAll("-"," "))}</h2>
-          </div>
-        )}
+                      </Link>
+                    );
+                  })}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href="/projects">Projects</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href={"/pricing"}>Pricing</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href={"/contact"}>Contact Us</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      ) : (
+        <div className="">
+          <h2 className="font-game rounded-tl-none text-5xl p-4 border-4 bg-slate-900 rounded-4xl">
+            {capitalize(exerciseslug?.toString()?.replaceAll("-", " "))}
+          </h2>
+        </div>
+      )}
       {!user ? (
         <Link href={"./sign-in"}>
           <Button className="font-game text-2xl" variant={"pixel"}>
