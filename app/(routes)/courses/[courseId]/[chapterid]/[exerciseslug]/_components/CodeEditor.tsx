@@ -67,7 +67,8 @@ const CodeEditor = ({ courseExerciseData, loading }: props) => {
     <div>
       <SandpackProvider
       theme={"dark"}
-        template="static"
+        //@ts-ignore
+        template={courseExerciseData?.editorType ?? "react"}
         style={{ height: "100vh" }}
         files={courseExerciseData?.exercisedata?.exerciseContent?.starterCode}
         options={{

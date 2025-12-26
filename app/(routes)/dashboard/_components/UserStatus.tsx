@@ -2,8 +2,11 @@
 
 import Image from 'next/image'
 import { useUser } from '@clerk/nextjs'
+import { useContext } from 'react';
+import { UserDetailContext } from '@/context/UserDetailContext';
 const UserStatus = () => {
     const {user}=useUser();
+    const {userDetail,setUserDetail}=useContext(UserDetailContext);
   return (
     <div className='border-4 p-4 rounded-3xl'>
 
@@ -16,7 +19,7 @@ const UserStatus = () => {
     <div className='flex items-center '>
         <Image src={'/star.gif'} alt='star' width={35} height={35}></Image>
         <div >
-            <h2 className='text-xl font-game'>20</h2>
+            <h2 className='text-xl font-game'>{userDetail?.points}</h2>
             <h2 className='font-game text-xl text-gray-600'>Total Rewards</h2>
         </div>
     </div>

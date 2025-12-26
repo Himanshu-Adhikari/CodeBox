@@ -36,6 +36,7 @@ export type CourseExercise = {
   desc: string;
   name: string;
   exercises: exercise[];
+  editorType?:string;
   exercisedata: ExerciseData;
   completedExercise: CompletedExercise[];
 };
@@ -65,7 +66,6 @@ const SLuggggg = () => {
       chapterId: chapterid,
       exerciseId: exerciseslug,
     });
-    // console.log(result.data);
     setcourseExerciseData(result.data);
     setloading(false);
   };

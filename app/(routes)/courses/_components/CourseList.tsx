@@ -43,7 +43,11 @@ export type Course = {
   exercises_complete?:CompletedExercise[];
 };
 
-const CourseList = () => {
+type Props={
+  smallerCard?:boolean;
+  maxLimit?:number;
+}
+const CourseList = ({smallerCard=false,maxLimit=100}:Props) => {
   const [courseList, setCourseList] = useState<Course[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -86,7 +90,8 @@ const CourseList = () => {
 
   return (
     <div className="grid mt-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 ml-3 mr-3">
-      {courseList?.map((course) => (
+      
+      {courseList?.map((course ,index) => maxLimit && maxLimit>index &&(
         <Link href={'/courses/'+course?.courseId} key={course.id}>
         <div
           
@@ -97,7 +102,7 @@ const CourseList = () => {
             height={400}
             width={400}
             alt={course.title}
-            className="w-full h-[200px] object-cover rounded-t-lg"
+            className={`w-full ${smallerCard?'h-[120px]':'h-[200px]'} object-cover rounded-t-lg`}
             />
           <div className="p-3">
             <h2 className="text-2xl font-game">{course.title}</h2>
