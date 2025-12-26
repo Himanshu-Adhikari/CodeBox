@@ -9,7 +9,7 @@ type props={
 const ContentSection = ({courseExerciseData,loading}:props) => {
     const contentInfo=courseExerciseData?.exercisedata
   return (
-    <div className="p-10">
+    <div className="p-10 mb-35">
         {
             loading || !contentInfo?
             <Skeleton className="h-full w-full m-10 rounded-2xl"/>:

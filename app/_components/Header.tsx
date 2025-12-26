@@ -20,7 +20,7 @@ import { useParams, usePathname } from "next/navigation";
 const Header = () => {
   const { user } = useUser();
   const pathurl = usePathname();
-  console.log(pathurl);
+  // console.log(pathurl);
   const { exerciseslug } = useParams();
   const capitalize = (s:string) => s ? s[0].toUpperCase() + s.slice(1) : s;
 
